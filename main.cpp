@@ -31,6 +31,7 @@ vector<vector<string>> board(3 , vector<string>(3 , ""));
 int row_size = 3;
 int col_size = 3;
 
+Font customFont ;
 
 random_device rd;
 mt19937 gen(rd());
@@ -67,9 +68,11 @@ void DrawBoard(){
             int board_size =  90 + (BUTTON_SIZE * 3);
 
             if (i < row_size && j < col_size && board[i][j] != ""){
-                int x_position = 90 + (BUTTON_SIZE * j);
-                int y_position = 90 + (BUTTON_SIZE * i);                                                 
-                DrawText(board[i][j].c_str(), x_position + 30, y_position + 20, 80 , WHITE);             
+                float x_position = 90 + (BUTTON_SIZE * j) + 35 ;
+                float y_position = 90 + (BUTTON_SIZE * i) + 15;                                                 
+                DrawTextEx(customFont , board[i][j].c_str(), {x_position , y_position}  , 80 , 2 ,  WHITE);             
+
+                //DrawTextEx(customFont , (players[turn] + " Turn").c_str(), {180, 15}, 40, 2 , WHITE);
             }
 
             DrawLine(90 , position, board_size, position, WHITE) ;
@@ -219,13 +222,15 @@ int main(){
 
     SetTargetFPS(60);
 
+    customFont = LoadFontEx("fonts/DeterminationMonoWebRegular-Z5oq.ttf", 80, 0  , 0);
+
 
 
 
     while(!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawText((players[turn] + " Turn").c_str(), 180, 15, 40, WHITE);
+        DrawTextEx(customFont , (players[turn] + " Turn").c_str(), {180, 15}, 40, 2 , WHITE);
 
         DrawBoard();
 
@@ -239,6 +244,7 @@ int main(){
     }
 
 
+    UnloadFont(customFont);
 
     return 0;
 }
