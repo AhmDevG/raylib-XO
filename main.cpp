@@ -186,15 +186,20 @@ void handleClick(Vector2 &mousePoint){
 
 int main(){
     InitWindow(WIDTH , HEIGHT, "XO game");
+    InitAudioDevice();
 
     SetTargetFPS(60);
 
+    Music bgMusic = LoadMusicStream("audios/toby fox - UNDERTALE Soundtrack - 04 Fallen Down.ogg");
     customFont = LoadFontEx("fonts/DeterminationMonoWebRegular-Z5oq.ttf", 80, 0  , 0);
 
+    PlayMusicStream(bgMusic);
 
 
 
     while(!WindowShouldClose()) {
+        UpdateMusicStream(bgMusic);
+
         BeginDrawing();
         ClearBackground(BLACK);
         DrawTextEx(customFont , (players[turn] + " Turn").c_str(), {180, 12}, 40, 2 , WHITE);
@@ -224,6 +229,8 @@ int main(){
 
 
     UnloadFont(customFont);
+    UnloadMusicStream(bgMusic);
+    CloseAudioDevice();
 
     return 0;
 }
