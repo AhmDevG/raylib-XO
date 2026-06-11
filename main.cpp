@@ -60,6 +60,24 @@ struct Positions {
     Vector2 RESTART_BUTTON = {175, 55};
 };
 
+struct Cell {
+    Rectangle rect;
+    int i, j;
+};
+
+Cell cells[] = {
+    {top_left, 0, 0},
+    {top_middle, 0, 1},
+    {top_right, 0, 2},
+
+    {middle_left, 1, 0},
+    {center, 1, 1},
+    {middle_right, 1, 2},
+
+    {bottom_left, 2, 0},
+    {bottom_mid, 2, 1},
+    {bottom_right, 2, 2},
+};
 
 string checkWin(){
     vector<array<int,3>> lines = {
@@ -134,144 +152,35 @@ void DrawBoard(){
 Positions positions ;
 
 void handleClick(Vector2 &mousePoint){
-    if(canClick){
-        if(CheckCollisionPointRec(mousePoint, top_left)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.TOPLEFT.x;
-                int j = positions.TOPLEFT.y;
+    if (canClick) {
+        for (auto &cell : cells) {
+
+            if (CheckCollisionPointRec(mousePoint, cell.rect) &&
+                IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+
+                int i = cell.i;
+                int j = cell.j;
 
                 if (board[i][j] != "") return;
+
                 board[i][j] = players[turn];
+                turn = !turn;
 
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-            }
-        }
-        if(CheckCollisionPointRec(mousePoint, top_middle)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.TOPMID.x;
-                int j = positions.TOPMID.y;
-
-                if (board[i][j] != "") return;
-                board[i][j] = players[turn];
-
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-            }
-        }
-        if(CheckCollisionPointRec(mousePoint, top_right)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.TOPRIGHT.x;
-                int j = positions.TOPRIGHT.y;
-
-                if (board[i][j] != "") return;
-                board[i][j] = players[turn];
-
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-
-            }
-        }
-
-        if(CheckCollisionPointRec(mousePoint, middle_left)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.MIDLEFT.x;
-                int j = positions.MIDLEFT.y;
-
-                if (board[i][j] != "") return;
-                board[i][j] = players[turn];
-
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-
-            }
-        }
-        if(CheckCollisionPointRec(mousePoint, center)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.CENTER.x;
-                int j = positions.CENTER.y;
-
-                if (board[i][j] != "") return;
-                board[i][j] = players[turn];
-
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-            }
-        }
-        if(CheckCollisionPointRec(mousePoint, middle_right)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.MIDRIGHT.x;
-                int j = positions.MIDRIGHT.y;
-
-                if (board[i][j] != "") return;
-                board[i][j] = players[turn];
-
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-            }
-        }
-
-
-        if(CheckCollisionPointRec(mousePoint, bottom_left)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.BOTTOMLEFT.x;
-                int j = positions.BOTTOMLEFT.y;
-
-                if (board[i][j] != "") return;
-                board[i][j] = players[turn];
-
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-            }
-        }
-        if(CheckCollisionPointRec(mousePoint, bottom_mid)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.BOTTOMMID.x;
-                int j = positions.BOTTOMMID.y;
-
-                if (board[i][j] != "") return;
-                board[i][j] = players[turn];
-
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-            }
-        }
-        if(CheckCollisionPointRec(mousePoint, bottom_right)){
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                int i = positions.BOTTOMRIGHT.x;
-                int j = positions.BOTTOMRIGHT.y;
-
-                if (board[i][j] != "") return;
-                board[i][j] = players[turn];
-
-                if (turn == 1) turn = 0;
-                else turn = 1;
-
-
+                return;
             }
         }
     }
+    if (!canClick &&
+        CheckCollisionPointRec(mousePoint, restart_button) &&
+        IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 
-        if(!canClick){
-            if(CheckCollisionPointRec(mousePoint, restart_button) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                // restart game
-                for(int i = 0 ; i < 3 ; i++) {
-                    for (int j = 0; j < 3; j++) {
-                       board[i][j] = "";
-                    }
-                }
+        for (auto &row : board)
+            for (auto &cell : row)
+                cell = "";
 
-                canClick = 1;
-            }
-        }
+        canClick = 1;
+        return;
+    }
 }
 
 
