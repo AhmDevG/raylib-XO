@@ -86,6 +86,24 @@ string checkWin(){
         }
     }
 
+    bool draw = true;
+
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (board[i][j] == ""){
+               draw = false;
+               break;
+            }
+        }
+        if(!draw) break;
+    }
+
+    if(draw){
+        return "Draw!";
+    }
+
+
     return "";
 }
 
@@ -270,7 +288,7 @@ int main(){
     while(!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawTextEx(customFont , (players[turn] + " Turn").c_str(), {180, 15}, 40, 2 , WHITE);
+        DrawTextEx(customFont , (players[turn] + " Turn").c_str(), {180, 12}, 40, 2 , WHITE);
 
         DrawBoard();
 
@@ -284,6 +302,15 @@ int main(){
 
         if(won_string != ""){
             DrawTextEx(customFont , won_string.c_str(), {200, HEIGHT-70}, 40, 2 , GREEN);
+            // restart button
+            DrawLine(175 , 55 , 332 , 55 , WHITE) ;
+            DrawLine(175 , 80 , 332 , 80 , WHITE) ;
+            DrawLine(175 , 55 , 175 , 80 , WHITE) ;
+            DrawLine(332, 55 , 332 , 80 , WHITE) ;
+
+            DrawTextEx(customFont, "Restart", {205 , 54} , 25, 2, WHITE);
+
+
             canClick = 0;
         }
 
