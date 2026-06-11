@@ -11,7 +11,7 @@ using namespace std;
 
 const int WIDTH = 500;
 const int HEIGHT = 500;
-const int BUTTON_SIZE = 100;
+const int BUTTON_SIZE = 110;
 const int OFFSET = 10 + BUTTON_SIZE;
 
 
@@ -23,8 +23,8 @@ void DrawBoard(vector<vector<string>> &board){
             int x_position = 95 + (OFFSET * j) ;
             int y_position = 95 + (OFFSET * i) ;
 
-            DrawRectangle(x_position , y_position , BUTTON_SIZE, BUTTON_SIZE, GRAY);
-            DrawText(board[i][j].c_str() , 28 + x_position , 10 + y_position , 80  , WHITE);
+            // DrawRectangle(x_position , y_position , BUTTON_SIZE, BUTTON_SIZE, GRAY);
+            // DrawText(board[i][j].c_str() , 28 + x_position , 10 + y_position , 80  , WHITE);
         }
     }
 }
@@ -60,7 +60,23 @@ int main(){
         BeginDrawing();
         ClearBackground(BLACK);
         DrawText((players[randomIndex] + " Turn").c_str(), 180, 15, 40, WHITE);
-        DrawBoard(board);
+        //DrawBoard(board);
+        // 95 + (OFFSET * j) ;
+        // 95 + (OFFSET * i) ;
+        // 90 + 2
+        
+        // x - AXIS 
+        DrawLine(90,  90,  420,  90 ,  WHITE);
+        DrawLine(90,  BUTTON_SIZE + 90     ,  420 ,  90 + BUTTON_SIZE ,  WHITE); 
+        DrawLine(90,  BUTTON_SIZE * 2 + 90 ,  420 ,  90 + BUTTON_SIZE*2 ,  WHITE);
+        DrawLine(90,  BUTTON_SIZE * 3 + 90 ,  420,  90 + BUTTON_SIZE*3 ,  WHITE);
+
+        // Y - AXIS
+        DrawLine(90,  90,  90,  90 + BUTTON_SIZE*3 ,  WHITE);
+        DrawLine(90 + BUTTON_SIZE,  90,  90 + BUTTON_SIZE,  90 + BUTTON_SIZE*3 ,  WHITE);
+        DrawLine(90 + BUTTON_SIZE*2,  90,  90 + BUTTON_SIZE*2,  90 + BUTTON_SIZE*3 ,  WHITE);
+        DrawLine(90 + BUTTON_SIZE*3,  90,  90 + BUTTON_SIZE*3 ,  90 + BUTTON_SIZE*3 ,  WHITE);
+
         EndDrawing();
     }
 
