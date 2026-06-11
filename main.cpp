@@ -1,10 +1,9 @@
 #include <iostream>
 #include "include/raylib.h"
 #include <random>
-#include <utility>
 #include <vector>
+#include <array>
 #include <string>
-#include <map>
 
 using namespace std;
 
@@ -39,6 +38,7 @@ mt19937 gen(rd());
 uniform_int_distribution<size_t> dist(0 , players.size() - 1);
 
 size_t turn = dist(gen);
+int canClick = 1 ;
 
 
 struct Positions {
@@ -57,7 +57,37 @@ struct Positions {
 };
 
 
+string checkWin(){
+    vector<array<int,3>> lines = {
+        {0, 1, 2},
+        {3, 4, 5},
+        {6, 7, 8},
+        {0, 3, 6}, 
+        {1, 4, 7}, 
+        {2, 5, 8},
+        {0, 4, 8},
+        {2, 4, 6}  
+    };
 
+    for (int i = 0; i < lines.size(); i++) {
+        int a = lines[i][0];
+        int b = lines[i][1];
+        int c = lines[i][2];
+
+        int ax = a / 3, ay = a % 3;
+        int bx = b / 3, by = b % 3;
+        int cx = c / 3, cy = c % 3;
+
+        if (board[ax][ay] != "" &&
+            board[ax][ay] == board[bx][by] &&
+            board[bx][by] == board[cx][cy]) {
+
+            return board[ax][ay] + " Won";
+        }
+    }
+
+    return "";
+}
 
 void DrawBoard(){
     int row_size = board.size();
@@ -71,8 +101,6 @@ void DrawBoard(){
                 float x_position = 90 + (BUTTON_SIZE * j) + 35 ;
                 float y_position = 90 + (BUTTON_SIZE * i) + 15;                                                 
                 DrawTextEx(customFont , board[i][j].c_str(), {x_position , y_position}  , 80 , 2 ,  WHITE);             
-
-                //DrawTextEx(customFont , (players[turn] + " Turn").c_str(), {180, 15}, 40, 2 , WHITE);
             }
 
             DrawLine(90 , position, board_size, position, WHITE) ;
@@ -94,6 +122,7 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
            }
         }
         if(CheckCollisionPointRec(mousePoint, top_middle)){
@@ -106,6 +135,7 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
            }
         }
         if(CheckCollisionPointRec(mousePoint, top_right)){
@@ -118,6 +148,8 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
+
             }
         }
 
@@ -131,6 +163,8 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
+
             }
         }
         if(CheckCollisionPointRec(mousePoint, center)){
@@ -143,6 +177,7 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
             }
         }
         if(CheckCollisionPointRec(mousePoint, middle_right)){
@@ -155,6 +190,7 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
             }
         }
 
@@ -169,6 +205,7 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
             }
         }
         if(CheckCollisionPointRec(mousePoint, bottom_mid)){
@@ -181,6 +218,7 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
             }
         }
         if(CheckCollisionPointRec(mousePoint, bottom_right)){
@@ -193,6 +231,8 @@ void handleClick(Vector2 &mousePoint){
 
                 if (turn == 1) turn = 0;
                 else turn = 1;
+
+
             }
         }
 
@@ -234,9 +274,18 @@ int main(){
 
         DrawBoard();
 
-        Vector2 mousePoint = GetMousePosition();
-        handleClick(mousePoint);
+        if(canClick){
+            Vector2 mousePoint = GetMousePosition();
+            handleClick(mousePoint);
+        }
 
+
+        string won_string = checkWin();
+
+        if(won_string != ""){
+            DrawTextEx(customFont , won_string.c_str(), {200, HEIGHT-70}, 40, 2 , GREEN);
+            canClick = 0;
+        }
 
 
 
