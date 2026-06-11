@@ -187,24 +187,6 @@ void handleClick(Vector2 &mousePoint){
 int main(){
     InitWindow(WIDTH , HEIGHT, "XO game");
 
-
-    // for testing
-    // board[0][0] = "X";
-    // board[0][1] = "X";
-    // board[0][2] = "X";
-    //
-    //
-    // board[1][0] = "X";
-    // board[1][1] = "X";
-    // board[1][2] = "X";
-    //
-    //
-    // board[2][0] = "O";
-    // board[2][1] = "O";
-    // board[2][2] = "O";
-    
-
-
     SetTargetFPS(60);
 
     customFont = LoadFontEx("fonts/DeterminationMonoWebRegular-Z5oq.ttf", 80, 0  , 0);
