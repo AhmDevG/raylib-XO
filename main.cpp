@@ -34,12 +34,13 @@ int col_size = 3;
 
 Font customFont ;
 
-random_device rd;
-mt19937 gen(rd());
-
-uniform_int_distribution<size_t> dist(0 , players.size() - 1);
-
-size_t turn = dist(gen);
+// random_device rd;
+// mt19937 gen(rd());
+//
+// uniform_int_distribution<size_t> dist(0 , players.size() - 1);
+//
+// size_t turn = dist(gen);
+size_t turn = 0;
 int canClick = 1 ;
 
 
@@ -58,6 +59,11 @@ struct Positions {
     Vector2 BOTTOMRIGHT = {2 , 2};
 
     Vector2 RESTART_BUTTON = {175, 55};
+};
+
+struct Move {
+    int i , j;
+    int score;
 };
 
 struct Cell {
@@ -79,7 +85,16 @@ Cell cells[] = {
     {bottom_right, 2, 2},
 };
 
-string checkWin(){
+enum class GameState {
+    LOSE = -10,
+    TIE = 0,
+    NOTENDED = 1,
+    WIN = 10 
+};
+
+
+
+GameState checkState(){
     vector<array<int,3>> lines = {
         {0, 1, 2},
         {3, 4, 5},
@@ -100,11 +115,20 @@ string checkWin(){
         int bx = b / 3, by = b % 3;
         int cx = c / 3, cy = c % 3;
 
-        if (board[ax][ay] != "" &&
-            board[ax][ay] == board[bx][by] &&
-            board[bx][by] == board[cx][cy]) {
+        string a_result = board[ax][ay];
+        string b_result = board[bx][by];
+        string c_result = board[cx][cy];
 
-            return board[ax][ay] + " Won";
+        if (a_result != "" &&
+            a_result == b_result &&
+            b_result == c_result) {
+
+            if(board[ax][ay] == "X"){
+                return GameState::WIN;
+            }
+            else{
+                return GameState::LOSE;
+            }
         }
     }
 
@@ -122,11 +146,11 @@ string checkWin(){
     }
 
     if(draw){
-        return "Draw!";
+        return GameState::TIE;
     }
-
-
-    return "";
+    else{
+        return GameState::NOTENDED;
+    }
 }
 
 void DrawBoard(){
@@ -183,6 +207,66 @@ void handleClick(Vector2 &mousePoint){
     }
 }
 
+Move miniMax(int depth , bool isMaximizing){
+    GameState result = checkState();
+    if(depth == 0 || result != GameState::NOTENDED){
+        int score;
+        
+        if (result == GameState::WIN) score = -10;
+        else if (result == GameState::LOSE) score = 10; 
+        else score = 0;
+
+        return {-1 ,-1 , score};
+    };
+
+    Move bestMove;
+
+    if (isMaximizing){
+        bestMove.score = -1000;
+
+        for (int i = 0 ; i < row_size ; i++){
+            for (int j = 0; j < col_size; j++) {
+
+                if (board[i][j] == ""){
+
+                    board[i][j] = "O";
+
+                    Move move = miniMax(depth-1, !isMaximizing);
+
+                    board[i][j] = "";
+
+                    if (move.score > bestMove.score){
+                        bestMove = {i , j , move.score };
+                    }
+                }
+            }
+        }
+    }
+    else{
+        bestMove.score = 1000;
+
+        for (int i = 0 ; i < row_size ; i++){
+            for (int j = 0; j < col_size; j++) {
+
+                if (board[i][j] == ""){
+
+                    board[i][j] = "X";
+
+                    Move move = miniMax(depth-1, !isMaximizing);
+
+                    board[i][j] = "";
+
+                    if (move.score < bestMove.score){
+                        bestMove = {i , j , move.score };
+                    }
+
+                }
+            }
+        }
+    }
+    return bestMove;
+}
+
 
 int main(){
     InitWindow(WIDTH , HEIGHT, "XO game");
@@ -206,20 +290,43 @@ int main(){
 
         DrawBoard();
 
+        if (turn == 1 && canClick) {
+            Move aiMove = miniMax(9 , true);
+            board[aiMove.i][aiMove.j] = "O";
+            turn = 0;
+        }
+
         Vector2 mousePoint = GetMousePosition();
+
+
         handleClick(mousePoint);
 
 
-        string won_string = checkWin();
 
-        if(won_string != ""){
+        GameState state = checkState();
+        string stateString{};
+
+        if(state != GameState::NOTENDED){
             canClick = 0;
         }
 
-        if(!canClick){
-            DrawTextEx(customFont , won_string.c_str(), {200, HEIGHT-70}, 40, 2 , GREEN);
-            DrawRectangleLines(175, 55, 157, 25, WHITE);
+        if (state == GameState::WIN){
+            stateString = "X Won";
+            turn = 0;
+        }
+        else if (state == GameState::LOSE){
+            stateString = "O Won";
+            turn = 0;
+        }
+        else if (state == GameState::TIE){
+            stateString = "Draw";
+            turn = 0;
+        }
+        
 
+        if(!canClick){
+            DrawTextEx(customFont , stateString.c_str(), {200, HEIGHT-70}, 40, 2 , GREEN);
+            DrawRectangleLines(175, 55, 157, 25, WHITE);
             DrawTextEx(customFont, "Restart", {205 , 54} , 25, 2, WHITE);
         }
 
