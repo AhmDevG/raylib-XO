@@ -1,0 +1,3 @@
+D:/raylib_XO/build/CMakeFiles/raylib_XO.dir
+D:/raylib_XO/build/CMakeFiles/edit_cache.dir
+D:/raylib_XO/build/CMakeFiles/rebuild_cache.dir
