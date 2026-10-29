@@ -284,7 +284,7 @@ int main(){
 
 
         if(!canClick){
-            DrawTextEx(customFont , stateString.c_str(), {200, HEIGHT-70}, 40, 2 , GREEN);
+            DrawTextEx(customFont , stateString.c_str(), {200, HEIGHT-70}, 40, 2 , ((state.first == GameState::LOSE ? RED : GREEN)));
             DrawRectangleLines(175, 55, 157, 25, WHITE);
             DrawTextEx(customFont, "Restart", {205 , 54} , 25, 2, WHITE);
         }
