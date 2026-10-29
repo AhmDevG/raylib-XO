@@ -1,7 +1,9 @@
 #include "../include/raylib.h"
+#include <optional>
 #include <vector>
 #include <array>
 #include <string>
+#include <iostream>
 #include "../include/structs.h"
 #include "../include/consts.h"
 #include "../include/rectangles.h"
@@ -31,17 +33,16 @@ Cell cells[] = {
 };
 
 
-
-GameState checkState(){
+pair<GameState, optional<vector<pair<int,int>>>> checkState(){
     vector<array<int,3>> lines = {
         {0, 1, 2},
         {3, 4, 5},
         {6, 7, 8},
-        {0, 3, 6}, 
-        {1, 4, 7}, 
+        {0, 3, 6},
+        {1, 4, 7},
         {2, 5, 8},
         {0, 4, 8},
-        {2, 4, 6}  
+        {2, 4, 6}
     };
 
     for (int i = 0; i < lines.size(); i++) {
@@ -53,19 +54,21 @@ GameState checkState(){
         int bx = b / 3, by = b % 3;
         int cx = c / 3, cy = c % 3;
 
-        string a_result = board[ax][ay];
-        string b_result = board[bx][by];
-        string c_result = board[cx][cy];
-
-        if (a_result != "" &&
-            a_result == b_result &&
-            b_result == c_result) {
+        if (board[ax][ay] != "" &&
+            board[ax][ay] == board[bx][by] &&
+            board[bx][by] == board[cx][cy]) {
 
             if(board[ax][ay] == "X"){
-                return GameState::WIN;
+                return {
+                    GameState::WIN ,
+                    vector<pair<int,int>>{{ax,ay} , {bx,by} , {cx,cy}}
+                };
             }
             else{
-                return GameState::LOSE;
+                return {
+                    GameState::LOSE,
+                    vector<pair<int,int>>{{ax,ay} , {bx,by} , {cx,cy}}
+                };
             }
         }
     }
@@ -84,10 +87,10 @@ GameState checkState(){
     }
 
     if(draw){
-        return GameState::TIE;
+        return {GameState::TIE, nullopt};
     }
     else{
-        return GameState::NOTENDED;
+        return {GameState::NOTENDED, nullopt};
     }
 }
 
@@ -101,8 +104,8 @@ void DrawBoard(){
 
             if (i < row_size && j < col_size && board[i][j] != ""){
                 float x_position = 90 + (BUTTON_SIZE * j) + 35 ;
-                float y_position = 90 + (BUTTON_SIZE * i) + 15;                                                 
-                DrawTextEx(customFont , board[i][j].c_str(), {x_position , y_position}  , 80 , 2 ,  WHITE);             
+                float y_position = 90 + (BUTTON_SIZE * i) + 15;
+                DrawTextEx(customFont , board[i][j].c_str(), {x_position , y_position}  , 80 , 2 ,  WHITE);
             }
 
             DrawLine(90 , position, board_size, position, WHITE) ;
@@ -146,12 +149,12 @@ void handleClick(Vector2 &mousePoint){
 }
 
 Move miniMax(int depth , bool isMaximizing){
-    GameState result = checkState();
-    if(depth == 0 || result != GameState::NOTENDED){
+    auto result = checkState();
+    if(depth == 0 || result.first != GameState::NOTENDED){
         int score;
-        
-        if (result == GameState::WIN) score = -10;
-        else if (result == GameState::LOSE) score = 10; 
+
+        if (result.first == GameState::WIN) score = -10;
+        else if (result.first == GameState::LOSE) score = 10;
         else score = 0;
 
         return {-1 ,-1 , score};
@@ -241,26 +244,56 @@ int main(){
 
 
 
-        GameState state = checkState();
+        auto state = checkState();
         string stateString{};
 
-        if(state != GameState::NOTENDED){
+        if(state.first != GameState::NOTENDED){
             canClick = 0;
         }
 
-        if (state == GameState::WIN){
+        if (state.first == GameState::WIN && state.second.has_value()){
+            auto &points = *state.second;
+            int line_thickness = 10;
+            auto first_point_j = points[0].second;
+            auto first_point_i = points[0].first;
+            float x_0_position = 90 + (BUTTON_SIZE * first_point_j) + (BUTTON_SIZE / 2) - (line_thickness / 2);
+            float y_0_position = 90 + (BUTTON_SIZE * first_point_i) + (BUTTON_SIZE / 2) - (line_thickness / 2);
+
+
+            auto second_point_j = points[2].second;
+            auto second_point_i = points[2].first;
+            float x_1_position = 90 + (BUTTON_SIZE * second_point_j) + (BUTTON_SIZE / 2) - (line_thickness / 2);
+            float y_1_position = 90 + (BUTTON_SIZE * second_point_i) + (BUTTON_SIZE / 2) - (line_thickness / 2);
+
+            DrawLineEx({x_0_position , y_0_position}, {x_1_position , y_1_position} , line_thickness , GREEN);
+
             stateString = "X Won";
             turn = 0;
         }
-        else if (state == GameState::LOSE){
+        else if (state.first == GameState::LOSE && state.second.has_value()){
+            auto &points = *state.second;
+            int line_thickness = 10;
+            auto first_point_j = points[0].second;
+            auto first_point_i = points[0].first;
+            float x_0_position = 90 + (BUTTON_SIZE * first_point_j) + (BUTTON_SIZE / 2) - (line_thickness / 2);
+            float y_0_position = 90 + (BUTTON_SIZE * first_point_i) + (BUTTON_SIZE / 2) - (line_thickness / 2);
+
+
+            auto second_point_j = points[2].second;
+            auto second_point_i = points[2].first;
+            float x_1_position = 90 + (BUTTON_SIZE * second_point_j) + (BUTTON_SIZE / 2) - (line_thickness / 2);
+            float y_1_position = 90 + (BUTTON_SIZE * second_point_i) + (BUTTON_SIZE / 2) - (line_thickness / 2);
+
+            DrawLineEx({x_0_position , y_0_position}, {x_1_position , y_1_position} , line_thickness , RED);
+
             stateString = "O Won";
             turn = 0;
         }
-        else if (state == GameState::TIE){
+        else if (state.first == GameState::TIE){
             stateString = "Draw";
             turn = 0;
         }
-        
+
 
         if(!canClick){
             DrawTextEx(customFont , stateString.c_str(), {200, HEIGHT-70}, 40, 2 , GREEN);
