@@ -3,7 +3,6 @@
 #include <vector>
 #include <array>
 #include <string>
-#include <iostream>
 #include "../include/structs.h"
 #include "../include/consts.h"
 #include "../include/rectangles.h"
@@ -208,6 +207,23 @@ Move miniMax(int depth , bool isMaximizing){
     return bestMove;
 }
 
+void drawStateLines(pair<GameState, optional<vector<pair<int,int>>>>  &state) {
+    auto &points = *state.second;
+    int line_thickness = 10;
+    auto first_point_j = points[0].second;
+    auto first_point_i = points[0].first;
+    float x_0_position = 90 + (BUTTON_SIZE * first_point_j) + (BUTTON_SIZE / 2);
+    float y_0_position = 90 + (BUTTON_SIZE * first_point_i) + (BUTTON_SIZE / 2);
+
+
+    auto second_point_j = points[2].second;
+    auto second_point_i = points[2].first;
+    float x_1_position = 90 + (BUTTON_SIZE * second_point_j) + (BUTTON_SIZE / 2);
+    float y_1_position = 90 + (BUTTON_SIZE * second_point_i) + (BUTTON_SIZE / 2);
+
+
+    DrawLineEx({x_0_position , y_0_position}, {x_1_position , y_1_position} , line_thickness , ((state.first == GameState::LOSE ? RED : GREEN)));
+}
 
 int main(){
     InitWindow(WIDTH , HEIGHT, "XO game");
@@ -232,7 +248,7 @@ int main(){
         DrawBoard();
 
         if (turn == 1 && canClick) {
-            Move aiMove = miniMax(9 , true);
+            Move aiMove = miniMax(2 , true);
             board[aiMove.i][aiMove.j] = "O";
             turn = 0;
         }
@@ -252,40 +268,12 @@ int main(){
         }
 
         if (state.first == GameState::WIN && state.second.has_value()){
-            auto &points = *state.second;
-            int line_thickness = 10;
-            auto first_point_j = points[0].second;
-            auto first_point_i = points[0].first;
-            float x_0_position = 90 + (BUTTON_SIZE * first_point_j) + (BUTTON_SIZE / 2) - (line_thickness / 2);
-            float y_0_position = 90 + (BUTTON_SIZE * first_point_i) + (BUTTON_SIZE / 2) - (line_thickness / 2);
-
-
-            auto second_point_j = points[2].second;
-            auto second_point_i = points[2].first;
-            float x_1_position = 90 + (BUTTON_SIZE * second_point_j) + (BUTTON_SIZE / 2) - (line_thickness / 2);
-            float y_1_position = 90 + (BUTTON_SIZE * second_point_i) + (BUTTON_SIZE / 2) - (line_thickness / 2);
-
-            DrawLineEx({x_0_position , y_0_position}, {x_1_position , y_1_position} , line_thickness , GREEN);
-
+            drawStateLines(state);
             stateString = "X Won";
             turn = 0;
         }
         else if (state.first == GameState::LOSE && state.second.has_value()){
-            auto &points = *state.second;
-            int line_thickness = 10;
-            auto first_point_j = points[0].second;
-            auto first_point_i = points[0].first;
-            float x_0_position = 90 + (BUTTON_SIZE * first_point_j) + (BUTTON_SIZE / 2) - (line_thickness / 2);
-            float y_0_position = 90 + (BUTTON_SIZE * first_point_i) + (BUTTON_SIZE / 2) - (line_thickness / 2);
-
-
-            auto second_point_j = points[2].second;
-            auto second_point_i = points[2].first;
-            float x_1_position = 90 + (BUTTON_SIZE * second_point_j) + (BUTTON_SIZE / 2) - (line_thickness / 2);
-            float y_1_position = 90 + (BUTTON_SIZE * second_point_i) + (BUTTON_SIZE / 2) - (line_thickness / 2);
-
-            DrawLineEx({x_0_position , y_0_position}, {x_1_position , y_1_position} , line_thickness , RED);
-
+            drawStateLines(state);
             stateString = "O Won";
             turn = 0;
         }

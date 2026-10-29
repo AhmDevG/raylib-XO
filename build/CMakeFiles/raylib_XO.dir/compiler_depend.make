@@ -20,8 +20,11 @@ CMakeFiles/raylib_XO.dir/src/main.cpp.obj: D:/raylib_XO/src/main.cpp \
   C:/msys64/mingw64/include/c++/15.2.0/bits/concept_check.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/cpp_type_traits.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/cxxabi_forced.h \
+  C:/msys64/mingw64/include/c++/15.2.0/bits/cxxabi_init_exception.h \
+  C:/msys64/mingw64/include/c++/15.2.0/bits/enable_special_members.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/exception.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/exception_defines.h \
+  C:/msys64/mingw64/include/c++/15.2.0/bits/exception_ptr.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/functexcept.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/functional_hash.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/hash_bytes.h \
@@ -30,6 +33,7 @@ CMakeFiles/raylib_XO.dir/src/main.cpp.obj: D:/raylib_XO/src/main.cpp \
   C:/msys64/mingw64/include/c++/15.2.0/bits/memory_resource.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/memoryfwd.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/move.h \
+  C:/msys64/mingw64/include/c++/15.2.0/bits/nested_exception.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/new_allocator.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/ostream_insert.h \
   C:/msys64/mingw64/include/c++/15.2.0/bits/postypes.h \
@@ -67,6 +71,7 @@ CMakeFiles/raylib_XO.dir/src/main.cpp.obj: D:/raylib_XO/src/main.cpp \
   C:/msys64/mingw64/include/c++/15.2.0/cwchar \
   C:/msys64/mingw64/include/c++/15.2.0/debug/assertions.h \
   C:/msys64/mingw64/include/c++/15.2.0/debug/debug.h \
+  C:/msys64/mingw64/include/c++/15.2.0/exception \
   C:/msys64/mingw64/include/c++/15.2.0/ext/alloc_traits.h \
   C:/msys64/mingw64/include/c++/15.2.0/ext/numeric_traits.h \
   C:/msys64/mingw64/include/c++/15.2.0/ext/string_conversions.h \
@@ -74,12 +79,14 @@ CMakeFiles/raylib_XO.dir/src/main.cpp.obj: D:/raylib_XO/src/main.cpp \
   C:/msys64/mingw64/include/c++/15.2.0/initializer_list \
   C:/msys64/mingw64/include/c++/15.2.0/iosfwd \
   C:/msys64/mingw64/include/c++/15.2.0/new \
+  C:/msys64/mingw64/include/c++/15.2.0/optional \
   C:/msys64/mingw64/include/c++/15.2.0/pstl/pstl_config.h \
   C:/msys64/mingw64/include/c++/15.2.0/stdlib.h \
   C:/msys64/mingw64/include/c++/15.2.0/string \
   C:/msys64/mingw64/include/c++/15.2.0/string_view \
   C:/msys64/mingw64/include/c++/15.2.0/tuple \
   C:/msys64/mingw64/include/c++/15.2.0/type_traits \
+  C:/msys64/mingw64/include/c++/15.2.0/typeinfo \
   C:/msys64/mingw64/include/c++/15.2.0/vector \
   C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++allocator.h \
   C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++config.h \
@@ -131,17 +138,17 @@ C:/msys64/mingw64/include/_mingw_secapi.h:
 
 C:/msys64/mingw64/include/_mingw.h:
 
-C:/msys64/mingw64/include/sec_api/stdlib_s.h:
-
-D:/raylib_XO/src/main.cpp:
-
-C:/msys64/mingw64/include/c++/15.2.0/cwchar:
-
 C:/msys64/mingw64/include/c++/15.2.0/bits/concept_check.h:
 
 C:/msys64/mingw64/include/c++/15.2.0/bits/postypes.h:
 
 C:/msys64/mingw64/include/c++/15.2.0/bits/alloc_traits.h:
+
+C:/msys64/mingw64/include/sec_api/stdlib_s.h:
+
+C:/msys64/mingw64/include/c++/15.2.0/cwchar:
+
+D:/raylib_XO/src/main.cpp:
 
 C:/msys64/mingw64/include/_mingw_mac.h:
 
@@ -185,21 +192,19 @@ C:/msys64/mingw64/include/c++/15.2.0/bits/exception_defines.h:
 
 C:/msys64/mingw64/include/c++/15.2.0/bits/charconv.h:
 
-C:/msys64/mingw64/include/c++/15.2.0/vector:
-
-C:/msys64/mingw64/include/c++/15.2.0/debug/assertions.h:
-
-C:/msys64/mingw64/include/c++/15.2.0/cstddef:
-
 C:/msys64/mingw64/include/c++/15.2.0/bits/cpp_type_traits.h:
 
 C:/msys64/mingw64/include/c++/15.2.0/bits/cxxabi_forced.h:
 
+C:/msys64/mingw64/include/c++/15.2.0/bits/cxxabi_init_exception.h:
+
+C:/msys64/mingw64/include/c++/15.2.0/bits/enable_special_members.h:
+
 C:/msys64/mingw64/include/c++/15.2.0/bits/exception.h:
 
-C:/msys64/mingw64/include/stdlib.h:
+C:/msys64/mingw64/include/c++/15.2.0/bits/new_allocator.h:
 
-C:/msys64/mingw64/include/c++/15.2.0/cstdlib:
+C:/msys64/mingw64/include/c++/15.2.0/bits/exception_ptr.h:
 
 C:/msys64/mingw64/include/swprintf.inl:
 
@@ -227,9 +232,11 @@ D:/raylib_XO/include/consts.h:
 
 C:/msys64/mingw64/include/c++/15.2.0/bits/predefined_ops.h:
 
-C:/msys64/mingw64/include/c++/15.2.0/bits/move.h:
+C:/msys64/mingw64/include/c++/15.2.0/tuple:
 
-C:/msys64/mingw64/include/c++/15.2.0/bits/new_allocator.h:
+C:/msys64/mingw64/include/c++/15.2.0/bits/nested_exception.h:
+
+C:/msys64/mingw64/include/c++/15.2.0/bits/move.h:
 
 C:/msys64/mingw64/include/c++/15.2.0/bits/ostream_insert.h:
 
@@ -265,9 +272,21 @@ C:/msys64/mingw64/include/c++/15.2.0/compare:
 
 C:/msys64/mingw64/include/c++/15.2.0/concepts:
 
+C:/msys64/mingw64/include/c++/15.2.0/vector:
+
+C:/msys64/mingw64/include/c++/15.2.0/debug/assertions.h:
+
+C:/msys64/mingw64/include/c++/15.2.0/cstddef:
+
 C:/msys64/mingw64/include/c++/15.2.0/cstdio:
 
+C:/msys64/mingw64/include/stdlib.h:
+
+C:/msys64/mingw64/include/c++/15.2.0/cstdlib:
+
 C:/msys64/mingw64/include/c++/15.2.0/debug/debug.h:
+
+C:/msys64/mingw64/include/c++/15.2.0/exception:
 
 C:/msys64/mingw64/include/c++/15.2.0/ext/alloc_traits.h:
 
@@ -283,6 +302,8 @@ C:/msys64/mingw64/include/c++/15.2.0/iosfwd:
 
 C:/msys64/mingw64/include/c++/15.2.0/new:
 
+C:/msys64/mingw64/include/c++/15.2.0/optional:
+
 C:/msys64/mingw64/include/c++/15.2.0/pstl/pstl_config.h:
 
 C:/msys64/mingw64/include/c++/15.2.0/stdlib.h:
@@ -291,9 +312,9 @@ C:/msys64/mingw64/include/c++/15.2.0/string:
 
 C:/msys64/mingw64/include/c++/15.2.0/string_view:
 
-C:/msys64/mingw64/include/c++/15.2.0/tuple:
-
 C:/msys64/mingw64/include/c++/15.2.0/type_traits:
+
+C:/msys64/mingw64/include/c++/15.2.0/typeinfo:
 
 C:/msys64/mingw64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++allocator.h:
 

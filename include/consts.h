@@ -9,3 +9,4 @@ const int BUTTON_SIZE = 110;
 const array<string, 2> players {"X" , "O"};
 const int row_size = 3;
 const int col_size = 3;
+const int line_thickness = 10 ;
