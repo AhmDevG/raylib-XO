@@ -248,7 +248,7 @@ int main(){
         DrawBoard();
 
         if (turn == 1 && canClick) {
-            Move aiMove = miniMax(2 , true);
+            Move aiMove = miniMax(9 , true);
             board[aiMove.i][aiMove.j] = "O";
             turn = 0;
         }
