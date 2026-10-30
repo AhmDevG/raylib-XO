@@ -1,8 +1,6 @@
 # Samples
-<img width="339" height="359" alt="image" src="https://github.com/user-attachments/assets/65e8d72d-268c-42dc-a362-c12fb7cec6c9" />
-<img width="341" height="357" alt="image" src="https://github.com/user-attachments/assets/22083915-ef6f-42da-837a-5e2b3f797dd0" />
-
-https://github.com/user-attachments/assets/955332ff-b931-4bf7-9b29-2e5119d4377d
+<img width="489" height="512" alt="image" src="https://github.com/user-attachments/assets/8c560393-97f0-4750-873b-8af70d995d00" />
+<img width="491" height="512" alt="image" src="https://github.com/user-attachments/assets/53764299-4b1b-4009-8473-889eec2fcd53" />
 
 # Console commands to run
 ```bash
